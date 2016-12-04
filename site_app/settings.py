@@ -34,6 +34,8 @@ else:
 DEBUG = not ON_PAAS
 DEBUG = DEBUG or os.getenv("debug","false").lower() == "true"
 
+DEBUG = True
+
 if ON_PAAS and DEBUG:
     print("*** Warning - Debug mode is on ***")
 
