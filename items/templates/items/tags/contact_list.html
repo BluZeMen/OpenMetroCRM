@@ -1,0 +1,5 @@
+<ul class="list-unstyled">
+	{% for item in list %}
+	<li><a href="{% url 'item:mi' item.id %}">{{ item.type }}</a>, {{ item.holder }}</li>
+	{% endfor %}
+</ul>

@@ -1,0 +1,25 @@
+{% extends "items/base.html" %}
+
+{% block page_title %}
+	{{ object }}
+{% endblock %}
+
+{% block content %}
+	<h3>{{ object.type }}</h3>
+	<ul class="list-unstyled">
+		<li>Тип: {{ object.type }}</li>
+		<li>Заводской номер: {{ object.serial }}</li>
+		<li>Дата последней проверки: {{ object.last_check_date }}</li>
+		<li>Дата следующей проверки: {{ object.next_check_date }}</li>
+		<li>Принадлежность: <a href="{% url 'personnel:contact' object.holder.holder.id %}">{{ object.holder.holder }}</a></li>
+		<li>Описание: 
+		{% if object.description %} 
+			<p>{{ object.description }}</p>
+		{% else %}
+			<p>{{ object.description }}</p>
+		{% endif %} 
+		</li>
+	</ul>
+	<br>
+	{{ block.super }}
+{% endblock %}

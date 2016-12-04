@@ -1,0 +1,135 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-19 13:52+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: personnel/apps.py:9
+msgid "Personnel"
+msgstr ""
+
+#: personnel/models.py:18
+msgid "Location"
+msgstr ""
+
+#: personnel/models.py:19
+msgid "Locations"
+msgstr ""
+
+#: personnel/models.py:21 personnel/models.py:90 personnel/models.py:104
+#: personnel/models.py:120 personnel/models.py:134
+msgid "name"
+msgstr ""
+
+#: personnel/models.py:22 personnel/models.py:91 personnel/models.py:106
+#: personnel/models.py:121 personnel/models.py:139
+msgid "description"
+msgstr ""
+
+#: personnel/models.py:32
+msgid "Contact"
+msgstr ""
+
+#: personnel/models.py:33
+msgid "Contacts"
+msgstr ""
+
+#: personnel/models.py:35
+msgid "patronymic"
+msgstr ""
+
+#: personnel/models.py:37
+msgid "Male"
+msgstr ""
+
+#: personnel/models.py:38
+msgid "Female"
+msgstr ""
+
+#: personnel/models.py:39
+msgid "Undefined"
+msgstr ""
+
+#: personnel/models.py:41
+msgid "gender"
+msgstr ""
+
+#: personnel/models.py:42
+msgid "mobile phone"
+msgstr ""
+
+#: personnel/models.py:43
+msgid "home phone"
+msgstr ""
+
+#: personnel/models.py:44
+msgid "home location"
+msgstr ""
+
+#: personnel/models.py:45
+msgid "birthday"
+msgstr ""
+
+#: personnel/models.py:87
+msgid "Contractor type"
+msgstr ""
+
+#: personnel/models.py:88
+msgid "Contractor types"
+msgstr ""
+
+#: personnel/models.py:101
+msgid "Contractor"
+msgstr ""
+
+#: personnel/models.py:102
+msgid "Contractors"
+msgstr ""
+
+#: personnel/models.py:105 personnel/models.py:135
+msgid "type"
+msgstr ""
+
+#: personnel/models.py:107 personnel/models.py:138
+msgid "location"
+msgstr ""
+
+#: personnel/models.py:117
+msgid "Job type"
+msgstr ""
+
+#: personnel/models.py:118
+msgid "Job types"
+msgstr ""
+
+#: personnel/models.py:131
+msgid "Job"
+msgstr ""
+
+#: personnel/models.py:132
+msgid "Jobs"
+msgstr ""
+
+#: personnel/models.py:136
+msgid "holder"
+msgstr ""
+
+#: personnel/models.py:137
+msgid "contractor"
+msgstr ""

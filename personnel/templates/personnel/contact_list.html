@@ -1,0 +1,48 @@
+{% extends "personnel/base.html" %}
+{% load panels charts helpers %}
+
+
+{% block extrahead %}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+        <div class="col-lg-12">
+            {% panel "Contacts" %}
+                {% if object_list %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Appeal</th>
+                                    <th>Age</th>
+                                    <th>Mobile phone</th>
+                                    <th>Home location</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for contact in object_list%}
+                                <tr>
+                                    <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+                                    <td><a href="{% url 'personnel:contact' contact.id %}">{{ contact.appeal }}</a></td>
+                                    <td>{{ contact.age }}</td>
+                                    <td>{{ contact.mobile_phone }}</td>
+                                    <td>{{ contact.home_location }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% pagination 'personnel:contact-list' %}
+                    </div>
+                {% else %}
+                    <p>Нет ни одного контакта :(</p>
+                {% endif %}
+
+            {% endpanel %}
+        </div>
+        <!-- /.col-lg-4 -->
+    </div>
+{% endblock %}

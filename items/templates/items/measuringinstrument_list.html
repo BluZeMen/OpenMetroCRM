@@ -1,0 +1,44 @@
+{% extends "items/base.html" %}
+{% load panels items_utils helpers %}
+
+{% block content %}
+	<div class="row">
+        <div class="col-lg-12">
+            <h3>Средства измерительной техники</h3>
+            {% if object_list %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-1">#</th>
+                                <th class="col-sm-3">Тип</th>
+                                <th class="col-sm-1">Заводской номер</th>
+                                <th class="col-sm-2">Последняя проверка</th>
+                                <th class="col-sm-1">Периодич. проверки</th>
+                                <th class="col-sm-2">Следующая проверка</th>
+                                <th class="col-sm-2">Работник</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for mi in object_list %}
+                            <tr class="{% mark_check_date mi.next_check_date %}">
+                                <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+                                <td><a href="{% url 'items:mi' mi.id %}">{{ mi.type }}</a></td>
+                                <td>{{ mi.serial }}</td>
+                                <td>{{ mi.last_check_date }}</td>
+                                <td>{{ mi.type.check_periodicity }}</td>
+                                <td>{{ mi.next_check_date }}</td>
+                                <td><a href="{% url 'personnel:contact' mi.holder.holder.id %}">{{ mi.holder.holder.short_presentation }}</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% pagination 'items:mi-list' %}
+                </div>
+            {% else %}
+                <p>Измерительных приборов не найдено</p>
+            {% endif %}
+        </div>
+        <!-- /.col-lg-4 -->
+    </div>
+{% endblock %}

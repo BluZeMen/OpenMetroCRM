@@ -1,0 +1,5 @@
+<ul class="list-unstyled">
+	{% for item in list %}
+	<li><a href="{% url 'personnel:contact' item.id %}">{{ item.short_presentation }}</a>, {{ item.age }}</li>
+	{% endfor %}
+</ul>

@@ -1,0 +1,139 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-19 13:53+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: items/apps.py:9
+msgid "Items"
+msgstr ""
+
+#: items/models.py:14
+msgid "Measuring instrument kind"
+msgstr ""
+
+#: items/models.py:15
+msgid "Measuring instruments kinds"
+msgstr ""
+
+#: items/models.py:17
+msgid "name"
+msgstr ""
+
+#: items/models.py:18 items/models.py:39 items/models.py:76
+msgid "description"
+msgstr ""
+
+#: items/models.py:30
+msgid "Measuring instrument type"
+msgstr ""
+
+#: items/models.py:31
+msgid "Measuring instruments types"
+msgstr ""
+
+#: items/models.py:33
+msgid "kind"
+msgstr ""
+
+#. Translators: This message appears on the home page only
+#: items/models.py:34 items/models.py:65
+msgid "type name"
+msgstr ""
+
+#: items/models.py:35
+msgid "accuracy class"
+msgstr ""
+
+#: items/models.py:36
+msgid "measurement limits"
+msgstr ""
+
+#: items/models.py:37
+msgid "supplier"
+msgstr ""
+
+#: items/models.py:38
+msgid "calibration periodicity"
+msgstr ""
+
+#: items/models.py:51
+msgid "Measuring instrument"
+msgstr ""
+
+#: items/models.py:52
+msgid "Measuring instruments"
+msgstr ""
+
+#: items/models.py:55
+msgid "Undefined"
+msgstr ""
+
+#: items/models.py:56
+msgid "Okay"
+msgstr ""
+
+#: items/models.py:57
+msgid "In repair"
+msgstr ""
+
+#: items/models.py:58
+msgid "Reserved"
+msgstr ""
+
+#: items/models.py:59
+msgid "Conserved"
+msgstr ""
+
+#: items/models.py:60
+msgid "Expected delivery"
+msgstr ""
+
+#: items/models.py:61
+msgid "Prepares to write-off"
+msgstr ""
+
+#: items/models.py:66
+msgid "serial"
+msgstr ""
+
+#: items/models.py:67
+msgid "inventory number"
+msgstr ""
+
+#: items/models.py:68
+msgid "state"
+msgstr ""
+
+#: items/models.py:69
+msgid "last check date"
+msgstr ""
+
+#: items/models.py:70
+msgid "last repair date"
+msgstr ""
+
+#: items/models.py:71
+msgid "repair description"
+msgstr ""
+
+#: items/models.py:75
+msgid "holder"
+msgstr ""
+
+#: items/models.py:88
+msgid "Undefined instrument"
+msgstr ""
