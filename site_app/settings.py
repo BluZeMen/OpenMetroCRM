@@ -21,7 +21,7 @@ from django.utils.translation import ugettext_lazy as _
 # sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 
 
-ON_PRODUCTION = 'PRODUCTION_SERVER' in os.environ
+ON_PRODUCTION = 'IS_PRODUCTION' in os.environ
 
 if ON_PRODUCTION:
     SECRET_KEY = os.environ['OPENSHIFT_SECRET_TOKEN']
@@ -40,7 +40,8 @@ DEBUG = DEBUG or os.getenv("debug","false").lower() == "true"
 
 DEBUG = True
 
-if ON_PRODUCTION and DEBUG:
+ALLOWED_HOSTS = ['109.234.37.121']
+if not ON_PRODUCTION and DEBUG:
     print("*** Warning - Debug mode is on ***")
 
 if ON_PRODUCTION:
