@@ -20,28 +20,32 @@ from django.utils.translation import ugettext_lazy as _
 # SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
 # sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 
-# openshift is our PAAS for now.
-ON_PAAS = 'OPENSHIFT_REPO_DIR' in os.environ
 
-if ON_PAAS:
+ON_PRODUCTION = 'PRODUCTION_SERVER' in os.environ
+
+if ON_PRODUCTION:
     SECRET_KEY = os.environ['OPENSHIFT_SECRET_TOKEN']
+
+    #todo: fix this!!!
+    # dirty dirty dirty hack
+    SECRET_KEY = ')_7av^!cy(wfx=k#3*7x+(=j^fzv+ot^1@sh9s9t=8$bu@r(z$'
 else:
     # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = ')_7av^!cy(wfx=k#3*7x+(=j^fzv+ot^1@sh9s9t=8$bu@r(z$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # adjust to turn off when on Openshift, but allow an environment variable to override on PAAS
-DEBUG = not ON_PAAS
+DEBUG = not ON_PRODUCTION
 DEBUG = DEBUG or os.getenv("debug","false").lower() == "true"
 
 DEBUG = True
 
-if ON_PAAS and DEBUG:
+if ON_PRODUCTION and DEBUG:
     print("*** Warning - Debug mode is on ***")
 
-if ON_PAAS:
+if ON_PRODUCTION:
     from socket import gethostname
-    ALLOWED_HOSTS = [os.environ['OPENSHIFT_APP_DNS'], gethostname()]
+    ALLOWED_HOSTS = [gethostname(),'109.234.37.121']
 
 
 DJ_PROJECT_DIR = os.path.dirname(__file__)
@@ -68,10 +72,10 @@ LOGOUT_URL = LOGIN_URL
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_HOST_USER = 'haitei.club@yandex.ru'
+EMAIL_HOST_USER = 'some-name@yandex.ru'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = '123456qwerty'
+EMAIL_HOST_PASSWORD = 'some-pass'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
@@ -125,7 +129,7 @@ WSGI_APPLICATION = 'site_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-if ON_PAAS:
+if ON_PRODUCTION:
     # determine if we are on MySQL or POSTGRESQL
     if "OPENSHIFT_POSTGRESQL_DB_USERNAME" in os.environ: 
         print('>>> Found PosgreSQL')
@@ -248,19 +252,13 @@ STATICFILES_FINDERS = (
 
 STATIC_URL = '/static/'
 
-if ON_PAAS:
-    STATIC_ROOT = os.path.join(os.environ.get('OPENSHIFT_REPO_DIR', ''), 'wsgi', 'static')
-else:
-    STATIC_ROOT = os.path.join(REPO_DIR, '.static')
+STATIC_ROOT = os.path.join(BASE_DIR, '.static')
 
 # STATICFILES_DIRS = [STATIC_ROOT]
 # STATIC_ROOT = ''
 
 MEDIA_URL = '/media/'
-if ON_PAAS:
-    MEDIA_ROOT = os.environ.get('OPENSHIFT_DATA_DIR', '')
-else:
-    MEDIA_ROOT = os.path.join(REPO_DIR, '.media')
+MEDIA_ROOT = os.path.join(BASE_DIR, '.media')
 
 
 try:
@@ -268,12 +266,12 @@ try:
 except ImportError as e:
     print('No local settings found')
 
-# if DEBUG:
-#     print('Project paths:')
-#     print('DJ_PROJECT_DIR: ', DJ_PROJECT_DIR)
-#     print('BASE_DIR: ', BASE_DIR)
-#     print('WSGI_DIR: ', WSGI_DIR)
-#     print('REPO_DIR: ', REPO_DIR)
-#     print('DATA_DIR: ', DATA_DIR)
-#     print('STATIC_ROOT: ', STATIC_ROOT)
-#     print('MEDIA_ROOT: ', MEDIA_ROOT)
+if DEBUG:
+    print('Project paths:')
+    print('DJ_PROJECT_DIR: ', DJ_PROJECT_DIR)
+    print('BASE_DIR: ', BASE_DIR)
+    print('WSGI_DIR: ', WSGI_DIR)
+    print('REPO_DIR: ', REPO_DIR)
+    print('DATA_DIR: ', DATA_DIR)
+    print('STATIC_ROOT: ', STATIC_ROOT)
+    print('MEDIA_ROOT: ', MEDIA_ROOT)
