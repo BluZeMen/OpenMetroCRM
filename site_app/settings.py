@@ -131,36 +131,17 @@ WSGI_APPLICATION = 'site_app.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 if ON_PRODUCTION:
-    # determine if we are on MySQL or POSTGRESQL
-    if "OPENSHIFT_POSTGRESQL_DB_USERNAME" in os.environ: 
-        print('>>> Found PosgreSQL')
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.postgresql_psycopg2',  
-                'NAME':     os.environ['OPENSHIFT_APP_NAME'],
-                'USER':     os.environ['OPENSHIFT_POSTGRESQL_DB_USERNAME'],
-                'PASSWORD': os.environ['OPENSHIFT_POSTGRESQL_DB_PASSWORD'],
-                'HOST':     os.environ['OPENSHIFT_POSTGRESQL_DB_HOST'],
-                'PORT':     os.environ['OPENSHIFT_POSTGRESQL_DB_PORT'],
-            }
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',  
+            'NAME':     os.environ['OPENSHIFT_APP_NAME'],
+            'USER':     os.environ['OPENSHIFT_POSTGRESQL_DB_USERNAME'],
+            'PASSWORD': os.environ['OPENSHIFT_POSTGRESQL_DB_PASSWORD'],
+            'HOST':     os.environ['OPENSHIFT_POSTGRESQL_DB_HOST'],
+            'PORT':     os.environ['OPENSHIFT_POSTGRESQL_DB_PORT'],
         }
-        
-    elif "OPENSHIFT_MYSQL_DB_USERNAME" in os.environ: 
-        print('>>> Found MySQL')
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.mysql',
-                'NAME':     os.environ['OPENSHIFT_APP_NAME'],
-                'USER':     os.environ['OPENSHIFT_MYSQL_DB_USERNAME'],
-                'PASSWORD': os.environ['OPENSHIFT_MYSQL_DB_PASSWORD'],
-                'HOST':     os.environ['OPENSHIFT_MYSQL_DB_HOST'],
-                'PORT':     os.environ['OPENSHIFT_MYSQL_DB_PORT'],
-            }
-        }
-        
+    }
 else:
-    # stock django, local development.
-    print('>>> Used development postgres db')
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',  
@@ -253,13 +234,13 @@ STATICFILES_FINDERS = (
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, '.static')
+STATIC_ROOT = os.path.join(REPO_DIR, '.static')
 
 # STATICFILES_DIRS = [STATIC_ROOT]
 # STATIC_ROOT = ''
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, '.media')
+MEDIA_ROOT = os.path.join(REPO_DIR, '.media')
 
 
 try:
