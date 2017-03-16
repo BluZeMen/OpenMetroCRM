@@ -1,15 +1,17 @@
 {% extends "personnel/base.html" %}
 
 {% block page_title %}
-	{{ object.appeal }}
+    {{ object.appeal }}
 {% endblock %}
 
 {% block content %}
-	<h3>{{ object.appeal_full }}</h3>
-	<ul class="list-unstyled">
-		<li>Дата рождения: {{ object.birthday }}, <em>{{ object.age }} года(лет)</em></li>
-		<li>Моб. телефон: {{ object.mobile_phone }}</li>
-		<li>Проживание: {{ object.home_location }}</li>
-	<br>
-	{{ block.super }}
+    <h3>{{ object.appeal_full }}</h3>
+
+    <ul class="list-unstyled">
+        <li>Дата рождения: {{ object.birthday }}, <em>{{ object.age }} года(лет)</em></li>
+        <li>Моб. телефон: {{ object.mobile_phone }}</li>
+        <li>Проживание: {{ object.home_location }}</li>
+    </ul>
+    <br>
+    {{ block.super }}
 {% endblock %}

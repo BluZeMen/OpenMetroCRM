@@ -1,0 +1,19 @@
+{% extends "items/base.html" %}
+
+{% block page_title %}
+    {% if object %}
+        {{ object }}
+    {% else %}
+        Новый измерительный прибор
+    {% endif %}
+
+{% endblock %}
+
+{% block content %}
+    <h3>{{ object.type }}</h3>
+    <form action="" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Сохранить" />
+    </form>
+    {{ block.super }}
+{% endblock %}

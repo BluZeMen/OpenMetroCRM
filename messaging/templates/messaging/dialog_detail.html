@@ -1,0 +1,65 @@
+{% extends "messaging/base.html" %}
+{% load panels charts contacts items_charts common %}
+
+{% block page_title %}
+    {{ object }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-10">
+            {% panel 'Диалог' %}
+                <div class="panel-body">
+                    <ul class="chat">
+                        {% for msg in object.get_last_messages reversed %}
+                            {% if msg.sender.id == request.user.id %}
+                                <li class="right clearfix">
+                                <span class="chat-img pull-right">
+                                    <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle"/>
+                                </span>
+                                    <div class="chat-body clearfix">
+                                        <div class="header">
+                                            <small class=" text-muted">
+                                                <i class="fa fa-clock-o fa-fw"></i> {{ msg.created_datetime|timesince }} назад
+                                            </small>
+                                            <strong class="pull-right primary-font"><a href="{% url 'personnel:contact' msg.sender.id %}">{{ msg.sender }}</a></strong>
+                                        </div>
+                                        <p>{{ msg.text }}</p>
+                                    </div>
+                            {% else %}
+                                <li class="left clearfix">
+                                    <span class="chat-img pull-left">
+                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle"/>
+                                    </span>
+                                    <div class="chat-body clearfix">
+                                        <div class="header">
+                                            <strong class="primary-font"><a href="{% url 'personnel:contact' msg.sender.id %}">{{ msg.sender }}</a></strong>
+                                            <small class="pull-right text-muted">
+                                                <i class="fa fa-clock-o fa-fw"></i> {{ msg.created_datetime|timesince }}
+                                                назад
+                                            </small>
+                                        </div>
+                                        <p>{{ msg.text }}</p>
+                                    </div>
+                                </li>
+                            {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <form action="" method="post" class="form-horizontal" role="form">
+                        <div class="col-xs-12 input-group">
+                            {% csrf_token %}
+                            <input name="text" id="btn-input" type="text" class="form-control input-sm" placeholder="Напишите текст сообщения здесь..." />
+                            <span class="input-group-btn">
+                                <input class="btn btn-warning btn-sm" id="btn-chat" type="submit" value="Отправить"/>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            {% endpanel %}
+        </div>
+    </div>
+    {{ block.super }}
+{% endblock %}

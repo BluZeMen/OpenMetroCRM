@@ -1,14 +1,12 @@
-from classytags.core import Tag, Options
 from classytags.arguments import Argument, MultiKeywordArgument
+from classytags.core import Tag, Options
 from django import template
 
 register = template.Library()
 
 
 class BasePanel(Tag):
-
     def render_tag(self, context, **kwargs):
-
         nodelist = kwargs.pop('nodelist')
         body = nodelist.render(context)
 
@@ -43,20 +41,20 @@ class Panel(BasePanel):
         arguments['icon'] = kw.get('icon', 'fa-cube')
         return arguments
 
+
 register.tag(Panel)
 
 
-class Chart(BasePanel):
-
-    name = 'chart'
-    template = 'tags/chart.html'
-    options = Options(
-        Argument('container_id'),
-        MultiKeywordArgument('kw', required=False),
-        blocks=[('endchart', 'nodelist')],
-    )
-
-    def get_panel_context(self, arguments):
-        kw = arguments.pop('kw')
-        arguments['style'] = kw.get('style', 'min-width: 310px; height: 400px; margin: 0 auto')
-        return arguments
+# class Chart(BasePanel):
+#     name = 'chart'
+#     template = 'tags/chart.html'
+#     options = Options(
+#         Argument('container_id'),
+#         MultiKeywordArgument('kw', required=False),
+#         blocks=[('endchart', 'nodelist')],
+#     )
+#
+#     def get_panel_context(self, arguments):
+#         kw = arguments.pop('kw')
+#         arguments['style'] = kw.get('style', 'min-width: 310px; height: 400px; margin: 0 auto')
+#         return arguments

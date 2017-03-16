@@ -1,0 +1,54 @@
+{% extends "messaging/base.html" %}
+{% load panels items_utils helpers %}
+
+{% block page_title %}
+    <h3>Диалоги</h3>
+{%  endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            {% if object_list %}
+                <div class="row">
+                    <div class="form-group">
+                        <a class="btn btn-primary" href="{% url 'messaging:message-create' %}">Написать сообщение</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <ul class="chat ">
+                        {% for dial in object_list %}
+                            {% with dial.get_last_message as last_msg %}
+                                <li class=" left clearfix">
+
+                            <span class="chat-img pull-left">
+                                <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle"/>
+                            </span>
+                                    <div class="chat-body clearfix">
+                                        <div class="header">
+                                            <strong class="primary-font"><a href="{% url 'personnel:contact' last_msg.sender.id %}">{{ last_msg.sender }}</a></strong>
+                                            <small class="pull-right text-muted">
+                                                <i class="fa fa-clock-o fa-fw"></i>{{ last_msg.created_datetime|timesince }}
+                                                <br><span class="pull-right badge">{{ dial.get_unread_messages_count }}</span>
+                                            </small>
+                                        </div>
+                                        <a href="{% url 'messaging:dialog' dial.id %}">
+                                            <p>
+                                                {{ last_msg.text|truncatechars:'120' }}
+                                            </p>
+                                        </a>
+                                    </div>
+
+                                </li>
+                            {% endwith %}
+                        {% endfor %}
+                    </ul>
+                    {% pagination 'messaging:dialog-list' %}
+                </div>
+            {% else %}
+                <p>Диалогов не найдено</p>
+                <p><a href="{% url 'messaging:message-create' %}">Написать сообщение</a></p>
+            {% endif %}
+        </div>
+        <!-- /.col-lg-4 -->
+    </div>
+{% endblock %}

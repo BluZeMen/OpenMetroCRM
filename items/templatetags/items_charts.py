@@ -1,60 +1,79 @@
-import copy
 import json
 
-from datetime import timedelta, datetime
+from classytags.arguments import Argument, MultiKeywordArgument
 from django import template
+from django.db.models.options import Options
 from django.utils.safestring import mark_safe
 
-from items.models import MeasuringInstrument, MeasuringInstrumentType
+from items.models import MeasuringInstrument
+from site_app.templatetags.charts import BaseChart
 
 register = template.Library()
 
 
-@register.simple_tag
-def mi_year_check_per_organization_series():
-    instruments = list(MeasuringInstrument.objects.all().values(
-        'id', 'next_check_date', 'type__checking_organization__name'))
-    data = dict()
-    for ins in instruments:
-        if ins['type__checking_organization__name'] not in data:
-            data[ins['type__checking_organization__name']] = [0]*12
-        data[ins['type__checking_organization__name']][ins['next_check_date'].month-1] += 1  # counting instruments per month
+class StatOfYearChart(BaseChart):
+    name = 'chart_year_stat'
+    template = 'items/tags/charts/year_stat.html'
 
-    series = [{'name': org, 'data': data[org]} for org in data]  # formatting for hightcharts
-    return mark_safe(json.dumps(series, ensure_ascii=False))
+    def get_panel_context(self, *args, **kwargs):
+        arguments = super(StatOfYearChart, self).get_panel_context(*args, **kwargs)
+
+        q = MeasuringInstrument.objects.year_checking_stat_per_organization_and_month(kwargs.get('year', None))
+
+        data = {}
+        for group in list(q):
+            org = group['type__checking_organization__name']
+            month = group['checking_month']
+            mi_count_in_org_in_month = group['type__checking_organization__count']
+            if org not in data:
+                # init 12 "months"(counts) of instruments to check
+                data[org] = [0] * 12
+            data[org][month - 1] = mi_count_in_org_in_month
+
+        series = [{'name': org, 'data': data[org]} for org in data]  # formatting for hightcharts
+        categories = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь',
+                      'Октябрь', 'Ноябрь', 'Декабрь']
+        arguments['series'] = mark_safe(json.dumps(series, ensure_ascii=False))
+        arguments['categories'] = mark_safe(json.dumps(categories, ensure_ascii=False))
+        return arguments
 
 
-@register.simple_tag
-def mi_operative_check_series(period_days=31):
-    # Getting all required info about organizations}
-    operative_date = datetime.today() + timedelta(days=period_days)
-    data = dict()
+register.tag(StatOfYearChart)
 
-    instruments = list(MeasuringInstrument.objects.filter(
-        next_check_date__lte=operative_date).values('id',
-                                                    'next_check_date',
-                                                    'type__name',
-                                                    'type__checking_organization__name'))
 
-    attr_org = 'type__checking_organization__name'
-    attr_type = 'type__name'
+class StatOfPeriodChart(BaseChart):
+    name = 'chart_period_stat'
+    template = 'items/tags/charts/period_stat.html'
 
-    organizations = {key[attr_org]: 0 for key in instruments}
-    types = {key[attr_type]: 0 for key in instruments}
+    def get_panel_context(self, *args, **kwargs):
+        arguments = super(StatOfPeriodChart, self).get_panel_context(*args, **kwargs)
 
-    ch_serie_item, ch_serie_name = attr_org, attr_type
-    cats = organizations
+        q = MeasuringInstrument.objects.checking_stat_per_organization_and_type(kwargs.get('period_days', 31),
+                                                                                kwargs.get('lookup_period_start', None))
+        groups = list(q)
 
-    for ins in instruments:
-        if ins[ch_serie_name] not in data:
-            data[ins[ch_serie_name]] = copy.copy(cats)
-        if ins[ch_serie_item] not in data[ins[ch_serie_name]]:
-            data[ins[ch_serie_name]][ins[ch_serie_item]] = 0
-        data[ins[ch_serie_name]][ins[ch_serie_item]] += 1
+        types = []
+        for group in groups:
+            name = group['type__kind__name'] + ' ' + group['type__name']
+            if name not in types:
+                types.append(name)
 
-    series = [{'name': key, 'data': list(data[key].values())}
-              for key in data] # formatting for hightcharts
-    return {
-        'series': mark_safe(json.dumps(series, ensure_ascii=False)),
-        'categories': mark_safe(json.dumps(list(cats.keys()), ensure_ascii=False))
-    }
+        data = {}
+        for group in groups:
+            org = group['type__checking_organization__name']
+            mi_type = types.index(group['type__kind__name'] + ' ' + group['type__name'])
+            mi_count_in_org = group['type__checking_organization__count']
+            if org not in data:
+                # init types counts of instruments to check
+                data[org] = [0] * len(types)
+
+            data[org][mi_type] = mi_count_in_org
+
+        series = [{'name': key, 'data': data[key]} for key in data]  # formatting for hightcharts
+
+        arguments['series'] = mark_safe(json.dumps(series, ensure_ascii=False))
+        arguments['categories'] = mark_safe(json.dumps(types, ensure_ascii=False))
+        return arguments
+
+
+register.tag(StatOfPeriodChart)

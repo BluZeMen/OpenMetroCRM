@@ -1,0 +1,11 @@
+{% extends "base_single_panel.html" %}
+
+{% block panel_title %} Проблема с активацией аккаунта {% endblock %}
+
+{% block content %}
+    <p class="lead">Активация аккаунта не произошла.</p>
+    {% load humanize %}
+    <p>Простите, она не сработала. Или Ваша ссылка активации некорректна, или
+        активационный ключь просрочен; ключь активации действителен
+        {{ expiration_days|apnumber }} дней после активации.</p>
+{% endblock %}

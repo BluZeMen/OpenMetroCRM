@@ -7,7 +7,7 @@ venv:
 
 fstrun:
 	source $(VENV_SRC) \
-	python manage.py makemigrations personnel items site_app \
+	python manage.py makemigrations personnel items messaging \
 	python manage.py migrate \
 	python manage.py createsuperuser 
 

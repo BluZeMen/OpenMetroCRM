@@ -47,4 +47,3 @@ class LocationAdmin(admin.ModelAdmin):
 @register(InventoryNumber)
 class InventoryNumberAdmin(admin.ModelAdmin):
     pass
-

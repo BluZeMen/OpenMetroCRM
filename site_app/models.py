@@ -3,8 +3,12 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class ModelTimestampMixin(models.Model):
-    last_change_date = models.DateTimeField(_('last change date'), auto_now=True, blank=True, null=True)
-    created_date = models.DateTimeField(_('entry date'), auto_created=True, blank=True, null=True)
+    modified_datetime = models.DateTimeField('Изменено', auto_now=True, editable=False,
+                                             help_text='Дата и время последнего изменения записи'
+                                             )
+    created_datetime = models.DateTimeField('Создано', auto_now_add=True, editable=False,
+                                            help_text='Дата и время создания записи'
+                                            )
 
     class Meta:
         abstract = True

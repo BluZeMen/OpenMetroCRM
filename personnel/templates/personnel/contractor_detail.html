@@ -1,0 +1,21 @@
+{% extends "personnel/base.html" %}
+
+{% block page_title %}
+    {{ object.full_name }}
+{% endblock %}
+
+{% block content %}
+    <h3>{{ object.appeal_full }}</h3>
+    <ul class="list-unstyled">
+    <li>Имя: <em>{{ object.name }}</em></li>
+    <li>Полное имя <em>{{ object.full_name }}</em></li>
+    <li>Тип: <em>{{ object.get_type_display }}</em></li>
+    <li>Адрес: <em>{{ object.location }}</em></li>
+    {% if object.description %}
+        <li>Описание: <em>{{ object.description }}</em></li>
+    {% endif %}
+
+    <br>
+    {{ block.super }}
+{% endblock %}
+

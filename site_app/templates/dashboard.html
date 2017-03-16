@@ -1,0 +1,60 @@
+{% extends "base_nav_sidebar.html" %}
+{% load panels charts contacts items_charts common %}
+
+{% block page_title %}Административная панель{% endblock %}
+
+{% block extrahead %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        {% panel "О сайте" %}
+            <p class="lead">Привет!</p>
+            <p>Добро пожаловать на скромный сайт, посвящённый работе метролога.</p>
+            <p>Сайт пока не обладает теми возможностями которыми я хочу его наделить, но работа над ним будет продолжена
+                и, надеюсь, в скором времени мне удастся показать более интересные задумки этого сайта. К тому же, мне
+                надо было с чего-то начать, потому Вы видите сию работу.</p>
+            <p>Заранее прошу прощения, если будут обнаружены ошибки в работе.
+                Буду очень благодарен, если дадите мне знать о найденных ошибках, отправив сообщение <i>разработчику</i>
+                в <a href="{% url "messaging:message-create" %}">чате</a>.</p>
+            <p>
+                <small><i>С уважением, разработчик.</i></small>
+            </p>
+
+        {% endpanel %}
+
+        <!-- /.panel -->
+        {% panel "Количества приборов на поверку" icon="fa-bar-chart" %}
+        {% chart_year_stat 'year-check-chart' style='min-width: 310px; height: 450px;' %}
+        {# start of js code #}
+        highchartConfig.yAxis.title.text = 'Количество средств измерения' // dirty configuration
+        {# end of js code #}
+        {% endchart %}
+        {% endpanel %}
+
+        {% panel "Текщие поверки" icon="fa-bar-chart" %}
+            {% chart_period_stat 'current-checkings' style='min-width: 310px; height: 450px;' %}
+            {% endchart %}
+        {% endpanel %}
+
+    </div>
+    <!-- /.col-lg-8 -->
+    <div class="col-lg-4">
+        {% panel "Топ 5 ближайших дней рождений" %}
+            {% upcoming_birthdays 5 %}
+        {% endpanel %}
+
+        {% panel "Топ 5 самых молодых" %}
+            {% top_young_contacts 5 %}
+        {% endpanel %}
+
+        {% panel "Топ 5 контрагентов должников приборов" %}
+            {% top_contractor_debtors 5 %}
+        {% endpanel %}
+    </div>
+    <!-- /.col-lg-4 -->
+</div>
+{% endblock %}

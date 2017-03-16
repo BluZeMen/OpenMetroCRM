@@ -1,0 +1,6 @@
+<ul class="list-unstyled">
+    {% for item in list %}
+        <li><strong>{{ item.debts_count }} шт.</strong> - <a
+                href="{% url 'personnel:contractor' item.id %}">{{ item.name }}</a></li>
+    {% endfor %}
+</ul>

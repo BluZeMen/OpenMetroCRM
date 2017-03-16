@@ -1,36 +1,65 @@
 {% extends "items/base.html" %}
-{% load panels items_utils helpers %}
+{% load static panels items_utils helpers %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+{% endblock %}
+
+{% block extrascript %}
+    <script
+			  src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+			  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+			  crossorigin="anonymous"></script>
+    <script src="{% static 'items/js/items_list.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/i18n/jquery.ui.datepicker-ru.min.js"></script>
+{% endblock %}
 
 {% block content %}
-	<div class="row">
+    <div class="row col-lg-12">
+        <h3>Средства измерительной техники</h3>
+    </div>
+    <div class="row" id="items-actions">
         <div class="col-lg-12">
-            <h3>Средства измерительной техники</h3>
+            <button type="button" class="btn btn-default btn-circle" behavior="btn-select-all">
+                <i class="fa fa-check"></i>
+            </button>
+            <a class="btn btn-primary" behavior="btn-create" href="{% url 'items:mi-create' %}">Создать</a>
+            <button class="btn btn-default" behavior="btn-update">Изменить</button>
+            <button class="btn btn-danger" behavior="btn-delete">Удалить</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
             {% if object_list %}
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover" id="items" src-url="{% url 'items:mi-list' %}">
                         <thead>
-                            <tr>
-                                <th class="col-sm-1">#</th>
-                                <th class="col-sm-3">Тип</th>
-                                <th class="col-sm-1">Заводской номер</th>
-                                <th class="col-sm-2">Последняя проверка</th>
-                                <th class="col-sm-1">Периодич. проверки</th>
-                                <th class="col-sm-2">Следующая проверка</th>
-                                <th class="col-sm-2">Работник</th>
-                            </tr>
+                        <tr>
+                            <th class="col-sm-1"><i class="fa fa-check"></i>  Id</th>
+                            <th class="col-sm-3">Тип</th>
+                            <th class="col-sm-1">Заводской номер</th>
+                            <th class="col-sm-2">Последняя проверка</th>
+                            <th class="col-sm-3">Времени до поверки (следующая проверка) </th>
+                            <th class="col-sm-2">Работник</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            {% for mi in object_list %}
+                        {% for mi in object_list %}
                             <tr class="{% mark_check_date mi.next_check_date %}">
-                                <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+                                <td><input type="checkbox" name="{{ mi.id }}" role="select"> {{ mi.id }}</td>
                                 <td><a href="{% url 'items:mi' mi.id %}">{{ mi.type }}</a></td>
                                 <td>{{ mi.serial }}</td>
-                                <td>{{ mi.last_check_date }}</td>
-                                <td>{{ mi.type.check_periodicity }}</td>
-                                <td>{{ mi.next_check_date }}</td>
-                                <td><a href="{% url 'personnel:contact' mi.holder.holder.id %}">{{ mi.holder.holder.short_presentation }}</a></td>
+                                <td>{{ mi.last_check_date|date:"d M Y" }}
+                                {% if today > mi.next_check_date  %}
+                                    <td><b>Просрочен ({{ mi.next_check_date|date:"d M Y" }}) </b></td>
+                                {% else %}
+                                    <td>{{ mi.next_check_date|timeuntil }} ({{ mi.next_check_date|date:"d M Y" }})</td>
+                                {% endif %}
+                                <td>
+                                    <a href="{% url 'personnel:contact' mi.holder.holder_id %}">{{ mi.holder.holder.short_presentation }}</a>
+                                </td>
                             </tr>
-                            {% endfor %}
+                        {% endfor %}
                         </tbody>
                     </table>
                     {% pagination 'items:mi-list' %}
@@ -41,4 +70,23 @@
         </div>
         <!-- /.col-lg-4 -->
     </div>
+    <form method="post" id="dialog-multiedit" class="form-horizontal">
+    {% csrf_token %}
+    {% for field in multiedit_form %}
+        {% if not forloop.first %}
+        <div class="form-group">
+            {{ field.errors }}
+            <div class="col-xs-3">{{ field.label_tag }}</div>
+            <div class="col-xs-6">
+                <input type="checkbox" name="edit__{{ field.name }}" value="false">
+                {{ field }}
+            </div>
+            {% if field.help_text %}
+            <p class="help">{{ field.help_text|safe }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    {% endfor %}
+{#        <input type="submit">#}
+    </form>
 {% endblock %}

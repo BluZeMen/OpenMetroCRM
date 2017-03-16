@@ -1,0 +1,100 @@
+{% extends "messaging/base.html" %}
+{% load panels charts contacts items_charts common %}
+
+{% block page_title %}
+    {{ object }}
+{% endblock %}
+
+{% block extrahead %}
+    {{ form.media.css }}
+{% endblock %}
+
+{% block extrascript %}
+    {{ form.media.js }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <form action="" method="post" class="form-horizontal">
+            {{ form }}
+            {{ form.non_field_errors }}
+            {% csrf_token %}
+            <fieldset>
+                <!-- Form Name -->
+                <legend>Новый диалог</legend>
+
+                <!-- Multiple Radios -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="create_new_dialog"></label>
+                    <div class="col-md-4">
+                        <div class="radio">
+                            <label for="create_new_dialog-0">
+                                <input name="create_new_dialog" id="create_new_dialog-0" value="True" checked="checked"
+                                       type="radio">
+                                Create new dialogue
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label for="create_new_dialog-1">
+                                <input name="create_new_dialog" id="create_new_dialog-1" value="False" type="radio">
+                                Send to existing dialogue
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Select Basic -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="{{ form.dialog.id_for_label }}">{{ form.dialog.label_tag }}</label>
+                    <div class="col-md-5">
+                        <select id="{{ form.dialog.id_for_label }}" name="{{ form.dialog.name }}" class="form-control">
+                            {% for instance in form.dialog.queryset %}
+                                <option value="{{ instance.pk }}">{{ instance.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Select Multiple -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="{{ form.participants.id_for_label }}">{{ form.participants.label_tag }}</label>
+                    <div class="col-md-5">
+                        <select id="{{ form.participants.id_for_label }}" name="{{ form.participants.name }}" class="form-control" multiple="multiple">
+                            {% for instance in form.participants.queryset %}
+                                <option value="{{ instance.pk }}">{{ instance.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="{{ form.dialog_name.id_for_label }}">{{ form.dialog_name.label_tag }}</label>
+                    <div class="col-md-5">
+                        <input id="{{ form.dialog_name.id_for_label }}" name="{{ form.dialog_name.name }}" placeholder="dialog name" class="form-control input-md"
+                               type="text">
+                    </div>
+                </div>
+
+                <!-- Textarea -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="{{ form.text.id_for_label }}">{{ form.text.label_tag }}</label>
+                    <div class="col-md-4">
+                        {{ form.text.errors }}
+                        <textarea class="form-control" id="{{ form.text.id_for_label }}" name="{{ form.text.name }}"></textarea>
+                    </div>
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="send">Отправить</label>
+                    <div class="col-md-4">
+                        <button id="send" name="send" class="btn btn-primary">Отправить</button>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+    {{ block.super }}
+{% endblock %}

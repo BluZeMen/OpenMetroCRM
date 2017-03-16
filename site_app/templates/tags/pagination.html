@@ -1,22 +1,23 @@
 {% load helpers %}
 
 <div class="pagination">
-    <ul class="pager">
-        {% if page_obj.has_previous %}
-            <li><a href="{% url url_name %}?{% url_put2get 'page' page_obj.previous_page_number %}">Prev</a></li>
-        {% endif %}
-
-        {% for page in pages %}
-            <li {% if page_obj.number == page %} class="active" {% endif %} >
-                <a href="{% url url_name %}?{% url_put2get 'page' page %}">{{ page }}</a>
+    {% if pages %}
+        <ul class="pager">
+            {% if page_obj.has_previous %}
+                <li><a href="{% url url_name %}?{% url_put2get 'page' page_obj.previous_page_number %}">Предыдущая</a>
+                </li>
+            {% endif %}
+{#            {% for page in page_obj.paginator.page_range|slice:page_nums_range %}#}
+{#                <li {% if page_obj.number == page %} class="active" {% endif %} >#}
+{#                    <a href="{% url url_name %}?{% url_put2get 'page' page %}">{{ page }}</a>#}
+{#                </li>#}
+{#            {% endfor %}#}
+            {% if page_obj.has_next %}
+                <li><a href="{% url url_name %}?{% url_put2get 'page' page_obj.next_page_number %}">Следующая</a></li>
+            {% endif %}
+            <li>
+                <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
             </li>
-        {% endfor %}
-
-        {% if page_obj.has_next %}
-            <li><a href="{% url url_name %}?{% url_put2get 'page' page_obj.next_page_number %}">Next</a></li>
-        {% endif %}
-        <li><span>
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-        </span></li>
-    </ul>
+        </ul>
+    {% endif %}
 </div>

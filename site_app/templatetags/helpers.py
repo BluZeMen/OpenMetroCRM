@@ -29,4 +29,18 @@ def pagination(context, url_name, **kwargs):
         'url_name': url_name
     }
 
+@register.filter('dict_value_of')
+def dict_value_of(dict_data, key):
+    """
+    usage example {{ your_dict|dict_value_of:your_key }}
+    """
+    if key:
+        return dict_data.get(key)
 
+
+@register.filter('duration2months')
+def dict_value_of(duration2months):
+    """
+    usage example {{ your_duration|duration2months }}
+    """
+    return duration2months.days // 30

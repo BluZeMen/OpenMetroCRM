@@ -1,6 +1,7 @@
 <div class="panel panel-{{ state }}">
     <div class="panel-heading">
         <i class="fa {{ icon }} fa-fw"></i> {{ title }}
+        {% if actions %}
         <div class="pull-right">
             <div class="btn-group">
                 <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
@@ -20,6 +21,7 @@
                 </ul>
             </div>
         </div>
+        {% endif %}
     </div>
     <!-- /.panel-heading -->
     <div class="panel-body">

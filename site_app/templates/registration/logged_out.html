@@ -1,0 +1,8 @@
+{% extends "base_single_panel.html" %}
+
+{% block panel_title %} Не авторизован {% endblock %}
+{% block panel_body %}
+    <p>Благодарим вас за время, проведенное на этом сайте.</p>
+    <p><a href="/">Перейти на домашнюю страницу</a></p>
+    <p><a href="{% url 'login' %}">Войти снова</a></p>
+{% endblock %}
