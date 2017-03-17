@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
-from registration.backends.model_activation.views import RegistrationView
+from registration.backends.views import RegistrationView
 from registration.forms import RegistrationFormUniqueEmail
 
 from .views import DashboardView
