@@ -21,7 +21,7 @@ CACHES = {
     },
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 MEDIA_ROOT = str(DATA_DIR.joinpath('static_content', 'media_root'))
 

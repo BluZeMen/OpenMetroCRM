@@ -6,9 +6,6 @@ ALLOWED_HOSTS = [
                     'localhost',
                 ] + SECRETS.get('allowed_hosts', [])
 
-DEBUG = False
-THUMBNAIL_DEBUG = DEBUG
-
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -22,6 +19,9 @@ CACHES = {
 }
 
 CSRF_COOKIE_SECURE = True
+
+DEBUG = False
+THUMBNAIL_DEBUG = DEBUG
 
 LOGGING["handlers"]["syslog"] = {
     "formatter": "full",
