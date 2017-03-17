@@ -42,7 +42,7 @@ MEDIA_ROOT = str(DATA_DIR.joinpath('media'))
 
 SESSION_COOKIE_SECURE = True
 
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 STATIC_ROOT = str(DATA_DIR.joinpath('static'))
 
