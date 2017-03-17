@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import RedirectView
-from registration.views import RegistrationView
+from registration.backends.default.views import RegistrationView
 from registration.forms import RegistrationFormUniqueEmail
 
 from .views import DashboardView
@@ -36,7 +36,7 @@ urlpatterns = [
     url(r'^accounts/password/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
 
     # django-registration
-    # url(r'^accounts/register/$', RegistrationView.as_view(form_class=RegistrationFormUniqueEmail), name='registration_register'),
+    url(r'^accounts/register/$', RegistrationView.as_view(form_class=RegistrationFormUniqueEmail), name='registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),
 
     # admin
@@ -54,10 +54,3 @@ if settings.DEBUG:
     urlpatterns += [
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ]
-    # urlpatterns += [url(r'^static/(.*)$', 'django.views.static.serve', {
-    #                     'document_root': settings.STATIC_ROOT
-    #                 }),
-    #                 url(r'^media/(.*)$', 'django.views.static.serve', {
-    #                     'document_root': settings.MEDIA_ROOT
-    #                 })
-    # ]
