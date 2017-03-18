@@ -61,10 +61,10 @@ DATABASES = {
 }
 
 
-DEFAULT_FROM_EMAIL = 'testmailserver03@gmail.com'
+DEFAULT_FROM_EMAIL = 'bm.user.b@gmail.com'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp-pulse.com'
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL
 EMAIL_HOST_PASSWORD = SECRETS.get('mail_server_pass', '')
 EMAIL_PORT = 587
