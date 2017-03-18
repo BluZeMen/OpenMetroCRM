@@ -26,7 +26,7 @@ urlpatterns = [
 
     # Accounts routine
     url(r'^accounts/login/$', auth_views.login, name='login'),
-    url(r'^accounts/logout/$', auth_views.login, name='logout'),
+    url(r'^accounts/logout/$', auth_views.logout, name='logout'),
     url(r'^accounts/password/reset/$', auth_views.password_reset,
         name='password_reset'),
     url(r'^accounts/password/change/done/$', auth_views.password_change_done, name='password_change_done'),
