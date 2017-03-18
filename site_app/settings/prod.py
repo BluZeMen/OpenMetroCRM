@@ -18,7 +18,7 @@ CACHES = {
 
 }
 
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
 
 DEBUG = False
 THUMBNAIL_DEBUG = DEBUG
@@ -40,7 +40,7 @@ MEDIA_ROOT = str(DATA_DIR.joinpath('media'))
 #     ['django.middleware.cache.FetchFromCacheMiddleware']
 # )
 
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = False
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 

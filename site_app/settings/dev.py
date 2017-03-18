@@ -9,7 +9,7 @@ ALLOWED_HOSTS = [
 DEBUG = True
 ON_PRODUCTION = 'IS_PRODUCTION' in os.environ
 
-if not ON_PRODUCTION and DEBUG:
+if ON_PRODUCTION and DEBUG:
     print("*** Warning - Debug mode is on ***")
 
 THUMBNAIL_DEBUG = DEBUG
@@ -17,7 +17,7 @@ THUMBNAIL_DEBUG = DEBUG
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'trololololol',
+        'LOCATION': 'trolololololocation',
     },
 }
 
