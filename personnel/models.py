@@ -82,7 +82,7 @@ class Contact(AbstractUser, ModelTimestampMixin, models.Model):
         return self.username
 
     def __str__(self):
-        return self.appeal
+        return self.short_presentation
 
 
 class ContractorType(ModelTimestampMixin, models.Model):
